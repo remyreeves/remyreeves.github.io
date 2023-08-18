@@ -35,6 +35,10 @@ a {
     text-decoration: none;
     color: #fff;
 }
+#selected{
+    text-decoration: underline;
+    color:blue;
+}
 
 /* main container area beneath menu */
 main {

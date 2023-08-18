@@ -1,6 +1,13 @@
-main {
-    background-color: blue;
+body {
+    background: rgb(94, 12, 200);
+    color: rgb(45, 45, 45);
+    padding: 10px;
+    font-family: arial;
 }
+#all-contents {
+    max-width: 800px;
+      margin: auto;
+  }
 /* navigation menu up top */
 nav {
     background: rgb(69, 15, 145);
@@ -26,4 +33,8 @@ h1 {
 a {
     text-decoration: none;
     color: #fff;
+}
+#selected{
+    text-decoration: underline;
+    color:blue;
 }
