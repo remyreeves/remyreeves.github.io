@@ -527,6 +527,7 @@ function createPlatform(x, y, width, height) {
 
 function createCannon(
   wallLocation,
+  Rotation,
   position,
   timeBetweenShots,
   width = defaultProjectileWidth,
@@ -536,7 +537,7 @@ function createCannon(
     cannons.push({
       x: position,
       y: cannonHeight,
-      rotation: 180,
+      rotation: Rotation,
       projectileCountdown: 0,
       location: wallLocation,
       timeBetweenShots: timeBetweenShots / (1000 / frameRate),
@@ -547,7 +548,7 @@ function createCannon(
     cannons.push({
       x: position,
       y: canvas.height - cannonHeight,
-      rotation: 0,
+      rotation: Rotation,
       projectileCountdown: 0,
       location: wallLocation,
       timeBetweenShots: timeBetweenShots / (1000 / frameRate),
@@ -558,7 +559,7 @@ function createCannon(
     cannons.push({
       x: cannonHeight,
       y: position,
-      rotation: 90,
+      rotation: Rotation,
       projectileCountdown: 0,
       location: wallLocation,
       timeBetweenShots: timeBetweenShots / (1000 / frameRate),
@@ -569,7 +570,7 @@ function createCannon(
     cannons.push({
       x: canvas.width - cannonHeight,
       y: position,
-      rotation: 270,
+      rotation: Rotation,
       projectileCountdown: 0,
       location: wallLocation,
       timeBetweenShots: timeBetweenShots / (1000 / frameRate),
@@ -635,7 +636,7 @@ function createProjectile(wallLocation, x, y, width, height) {
       x: x + 40 + width / 2,
       y: y - 71.5,
       speedX: -projectileSpeed,
-      speedY: 0,
+      speedY: projectileSpeed,
       width,
       height,
     });
