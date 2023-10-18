@@ -45,7 +45,7 @@
 			// Every 50 milliseconds, call the update Function (see below)
 			var interval = setInterval(update, 50);
 			function endGame(){
-				clearInterval(interval);
+				
 			}
 			
 			// Every time the box is clicked, call the handleBoxClick Function (see below)
@@ -111,8 +111,6 @@
 			};
 			function handleBoardClick() {
 				misclicks += 1;
-				speedX = 100;
-				speedY = 100;
 				if(misclicks == 10){
 					endGame();
 				}
@@ -143,7 +141,6 @@
 					}
 					clicks = 0;
 				}
-				handleBoardClick();
 			};
 		})();
 	</script>
