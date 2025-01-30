@@ -48,10 +48,10 @@ function makeCircle(id){
     
     // this gives the circle object all of the data that it needs to store
     circle.id = "#" + id;
-    circle.x = Math.random() * maXX + circleRadius;
+    circle.x = Math.random() * maxX + circleRadius;
     circle.y = Math.random() * maxY + circleRadius;
     circle.speedX = decideSpeed();
-    circle.speedY = desideSpeed();
+    circle.speedY = decideSpeed();
     
     return circle;
 }
@@ -90,7 +90,7 @@ function update(){
     // to make seeing issues in the debugger slightly easier (in practice, you should use
     // circles.length, but do NOT change it here)
     for (var i = 0; i < maxCircles; i++){
-        var circle = circles[j];
+        var circle = circles[i];
 
         // move the circle
         moveCircle(circle);
@@ -109,7 +109,7 @@ function update(){
 
 // this moves circles in memory but doesn't update them on the screen
 function moveCircle(circle){
-    circle.x = circle.speedX;
+    circle.x += circle.speedX;
     circle.y += circle.speedY;
 }
 
@@ -117,7 +117,7 @@ function moveCircle(circle){
 function bounceCircle(circle){
 
     // this bounces off the left wall
-    if (circle.x < 0){
+    if (circle.x <= 0){
         circle.x -= circle.speedX;
         circle.speedX *= -1;
     }
@@ -132,15 +132,15 @@ function bounceCircle(circle){
         circle.speedY *= -1;
     }
     // this bounces off the bottom wall
-    else if (circle.y > boardHeight){
-        circle.y -= circle.speedY;
-        circle.speedX *= -1;
+    else if (circle.y >= (boardHeight)){
+        circle.speedY *= -1;
+        circle.y += circle.speedY;
     }
 }
 
 // this redraws the circle's position on the screen
 function updateCircleOnScreen(circle){
-    maxCircles = 0;
+    maxCircles = maxCircles;
 
     // these lines redraw the circle's position
     $(circle.id).css('left', circle.x);
