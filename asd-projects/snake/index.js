@@ -30,7 +30,8 @@ var KEY = {
   W: 87,
   A: 65,
   S: 83,
-  D: 68
+  D: 68,
+  SPACE: 32
 };
 
 // interval variable required for stopping the update function when the game ends
@@ -105,6 +106,9 @@ function checkForNewDirection(event) {
   if (activeKey === KEY.UP || activeKey === KEY.W){
     snake.head.direction = "up";
   }
+  if (activeKey === KEY.SPACE){
+    handleAppleCollision();
+  }
   // FILL IN THE REST
 
   //console.log(snake.head.direction);     // uncomment me!
@@ -120,7 +124,7 @@ function moveSnake() {
   column/row properties. 
   
   */
-  for (var i = snake.body.length; i > 0; i--) {
+  for (var i = (snake.body.length - 1); i > 0; i--) {
     var snakeSquare = snake.body[i];
 
     var nextSnakeSquare = snake.body[i-1];
@@ -231,7 +235,13 @@ function hasCollidedWithSnake() {
   head and each part of the snake's body also knows its own row and column.
   
   */
-
+  for(var i = (snake.body.length - 1); i > 0; i--){
+    var snakeBodySquare = snake.body[i];
+    
+    if(snake.head.row === snakeBodySquare.row && snake.head.column === snakeBodySquare.column){
+      return true;
+    }
+  }
   return false;
 }
 
@@ -345,8 +355,16 @@ function getRandomAvailablePosition() {
   while (!spaceIsAvailable) {
     randomPosition.column = Math.floor(Math.random() * COLUMNS);
     randomPosition.row = Math.floor(Math.random() * ROWS);
+    
+    for(var i = 0; i < snake.body.length; i++){
+      var snakeSquare = snake.body[i];
+      
+      if(snakeSquare.row === randomPosition.row && snakeSquare.column === randomPosition.column){
+        spaceIsAvailable = false;
+        console.log("Unavailable apple position");
+      }
+    }
     spaceIsAvailable = true;
-
     /*
     TODO 13: After generating the random position determine if that position is
     not occupied by a snakeSquare in the snake's body. If it is then set 
