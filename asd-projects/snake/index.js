@@ -355,16 +355,19 @@ function getRandomAvailablePosition() {
   while (!spaceIsAvailable) {
     randomPosition.column = Math.floor(Math.random() * COLUMNS);
     randomPosition.row = Math.floor(Math.random() * ROWS);
-    
+    var hit = false;
     for(var i = 0; i < snake.body.length; i++){
       var snakeSquare = snake.body[i];
       
       if(snakeSquare.row === randomPosition.row && snakeSquare.column === randomPosition.column){
         spaceIsAvailable = false;
         console.log("Unavailable apple position");
+        hit = true;
       }
     }
-    spaceIsAvailable = true;
+    if(!hit){
+      spaceIsAvailable = true;
+    }
     /*
     TODO 13: After generating the random position determine if that position is
     not occupied by a snakeSquare in the snake's body. If it is then set 
