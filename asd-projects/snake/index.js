@@ -364,7 +364,7 @@ function getRandomAvailablePosition() {
         console.log("Unavailable apple position");
         hit = true;
       }
-    }
+    } 
     if(!hit){
       spaceIsAvailable = true;
     }
