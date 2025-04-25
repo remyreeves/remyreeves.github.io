@@ -38,7 +38,6 @@ function partition(){
 
 // TODO 1: Implement swap
 function swap(array,i,j){
-    [array[i],array[j]] = [array[j],array[i]];
     var temp = array[i];
     array[i]=array[j];
     array[j]=temp;
