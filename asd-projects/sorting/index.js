@@ -15,11 +15,13 @@ The CSS ids you will work with are:
 
 // TODO 2: Implement bubbleSort
 async function bubbleSort(array){
+    //loop through every value
     for(var i = 0; i <= array.length - 1; i++){
         for(var j = array.length - 1; j >= i + 1; j--){
             if(array[j].value < array[j - 1].value){
+                //move values to where they need to go, eventually
                 swap(array,j,(j-1));
-                updateCounter(bubbleCounter);
+                updateCounter(bubbleCounter); //update the bubblesort move counter
                 await sleep();
             }
         }
@@ -66,19 +68,19 @@ async function partition(array,left,right){
         while(array[right].value > pivot) { right--};
         if(left < right){
             swap(array,left,right);
-            updateCounter(quickCounter);
+            updateCounter(quickCounter); //update the quicksort move counter
             await sleep();
         }
     };
-    return left + 1;
+    return left + 1; //close the recursive loop
 }
 
 // TODO 1: Implement swap
 function swap(array,i,j){
-    var temp = array[i];
-    array[i]=array[j];
-    array[j]=temp;
-    drawSwap(array, i, j);
+    var temp = array[i]; //temp variable
+    array[i]=array[j]; //swap the first variable with the second
+    array[j]=temp; //swap the second variable with the copy of the first
+    drawSwap(array, i, j); //call drawSwap (premade)
 }
 
 ///////////////////////////////////////////////////////////////////////
