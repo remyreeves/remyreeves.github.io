@@ -14,6 +14,7 @@ The CSS ids you will work with are:
 ///////////////////////////////////////////////////////////////////////
 
 // TODO 2: Implement bubbleSort
+//move every value down along the line until it's in order
 async function bubbleSort(array){
     //loop through every value
     for(var i = 0; i <= array.length - 1; i++){
@@ -29,6 +30,7 @@ async function bubbleSort(array){
 }
 
 // TODO 3: Implement quickSort
+//call partition, wait for partition to give the sorted section, then call quicksort again to sort the right or left side again.
 async function quickSort(array,left,right){
 /*    FUNCTION quicksort(array, left, right):
   IF (right - left) > 0:
@@ -51,6 +53,8 @@ async function quickSort(array,left,right){
 }
 
 // TODOs 4 & 5: Implement partition
+//selects a pivot, then increase given left value and decreases given right value while swapping those values until left is no longer less than right
+//then updates quicksort move counter
 async function partition(array,left,right){
 /* FUNCTION partition (array, left, right):
   pivot = select a pivot
