@@ -11,14 +11,6 @@ body {
   position: relative;
 }
 
-#gameItem {
-  background-color: teal;
-  width: 50px;
-  height: 50px;
-  position: absolute;
-/*   left: 100px; */  /* Uncomment if you want to set a "starting" position */
-/*   top: 100px;  */  /* Uncomment if you want to set a "starting" position */
-}
 #leftPaddle {
   /* appearance */
   background-color: white;
@@ -41,7 +33,7 @@ body {
   /* positioning */
   position: absolute;
   top: 100px;
-  right: 30px;
+  left: 650px;
 }
 #middle {
   /* appearance */
