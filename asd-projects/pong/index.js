@@ -47,6 +47,8 @@ function runProgram(){
     wallCollision(leftPaddle);
     wallCollision(rightPaddle);
     wallCollision(ball);
+    doCollide(ball,leftPaddle);
+    doCollide(ball,rightPaddle);
     redrawGameItem(leftPaddle);
     redrawGameItem(rightPaddle);
     redrawGameItem(ball);
@@ -104,6 +106,9 @@ function runProgram(){
     var gameItem = {};
     gameItem.id = id;
     gameItem.x = parseFloat($(id).css("left"));
+    // if(parseFloat($(id).css("right"))){
+    //   gameItem.x = BOARD_WIDTH - parseFloat($(id).css("right"));
+    // }
     gameItem.y = parseFloat($(id).css("top"));
     gameItem.speedX = 0;
     gameItem.speedY = 0;
@@ -163,26 +168,50 @@ function runProgram(){
     }
   }
   //handle paddle-ball collisions
-  function paddleCollision(item){
-    //pull relevant data, dont copy coords to a container you need to edit them directly, not the copied version
-    //actually nevermind, do make containers for shortening the conditionals parts
-    let coordX = item.x;
-    //let coordY = item.y;
-    let speedX = item.speedX;
-    //let speedY = item.speedY;
-    //let width = BOARD_WIDTH; 
-    //let height = BOARD_HEIGHT; 
-
-    if (coordX < 0) {
-      //collide with left paddle
-      item.x -= speedX;
-      item.speedX = -speedX;
+  function doCollide(square1, square2) {
+    // TODO: calculate and store the remaining
+    // sides of the square1
+    let speedX = square1.speedX;
+    let speedY = square1.speedY;
+    square1.leftX = square1.x;
+    square1.topY = square1.y;
+    square1.rightX = square1.x+square1.width;
+    square1.bottomY = square1.y+square1.height;
+    // TODO: Do the same for square2
+    square2.leftX = square2.x;
+    square2.topY = square2.y;
+    square2.rightX = square2.x+square2.width;
+    square2.bottomY = square2.y+square2.height;
+    //debugger;
+    // TODO: Return true if they are overlapping, false otherwise
+    if(square1.leftX > square2.rightX){
+      square1.x -= speedX;
+      square1.speedX = -speedX;
+      square1.y -= speedY;
+      square1.speedY = -speedY;
+    } else if(square1.rightX < square2.leftX){
+      square1.x -= speedX;
+      square1.speedX = -speedX;
+      square1.y -= speedY;
+      square1.speedY = -speedY;
+    } else if(square1.topY > square2.bottomY){
+      square1.x -= speedX;
+      square1.speedX = -speedX;
+      square1.y -= speedY;
+      square1.speedY = -speedY;
+    } else if(square1.bottomY < square2.topY){
+      square1.x -= speedX;
+      square1.speedX = -speedX;
+      square1.y -= speedY;
+      square1.speedY = -speedY;
+    } else {
+      
     }
-    if (coordX + item.width > width) {
-      //collide with right paddle
-      item.x -= speedX;
-      item.speedX = -speedX;
-    }
+    // Hint: use the following conditions:
+      // red left < blue right
+      // red right > blue left
+      // red top < blue bottom
+      // red bottom > blue top
   }
   // make ball's starting position and random speed
   function startBall(){
