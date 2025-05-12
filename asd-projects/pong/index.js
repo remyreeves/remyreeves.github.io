@@ -47,8 +47,6 @@ function runProgram(){
     wallCollision(leftPaddle);
     wallCollision(rightPaddle);
     wallCollision(ball);
-    doCollide(ball,leftPaddle);
-    doCollide(ball,rightPaddle);
     redrawGameItem(leftPaddle);
     redrawGameItem(rightPaddle);
     redrawGameItem(ball);
@@ -146,7 +144,7 @@ function runProgram(){
     let width = BOARD_WIDTH; 
     let height = BOARD_HEIGHT; 
 
-    if (coordX < 0) {
+    if (coordX < 0 || doCollide(ball,leftPaddle)) {
       //collide with left wall
       item.x -= speedX;
       item.speedX = -speedX;
@@ -156,7 +154,7 @@ function runProgram(){
       item.y -= speedY;
       item.speedY = -speedY;
     }
-    if (coordX + item.width > width) {
+    if (coordX + item.width > width || doCollide(ball,rightPaddle)) {
       //collide with right wall
       item.x -= speedX;
       item.speedX = -speedX;
@@ -171,8 +169,6 @@ function runProgram(){
   function doCollide(square1, square2) {
     // TODO: calculate and store the remaining
     // sides of the square1
-    let speedX = square1.speedX;
-    let speedY = square1.speedY;
     square1.leftX = square1.x;
     square1.topY = square1.y;
     square1.rightX = square1.x+square1.width;
@@ -185,27 +181,15 @@ function runProgram(){
     //debugger;
     // TODO: Return true if they are overlapping, false otherwise
     if(square1.leftX > square2.rightX){
-      square1.x -= speedX;
-      square1.speedX = -speedX;
-      square1.y -= speedY;
-      square1.speedY = -speedY;
+      return false;
     } else if(square1.rightX < square2.leftX){
-      square1.x -= speedX;
-      square1.speedX = -speedX;
-      square1.y -= speedY;
-      square1.speedY = -speedY;
+      return false;
     } else if(square1.topY > square2.bottomY){
-      square1.x -= speedX;
-      square1.speedX = -speedX;
-      square1.y -= speedY;
-      square1.speedY = -speedY;
+      return false;
     } else if(square1.bottomY < square2.topY){
-      square1.x -= speedX;
-      square1.speedX = -speedX;
-      square1.y -= speedY;
-      square1.speedY = -speedY;
+      return false;
     } else {
-      
+      return true;
     }
     // Hint: use the following conditions:
       // red left < blue right
