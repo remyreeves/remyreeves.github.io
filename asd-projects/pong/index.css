@@ -66,4 +66,7 @@ body {
 }
 #score2 {
   text-align: right;
+  background-color: white;
+  color: black;
+  width: 700px;
 }

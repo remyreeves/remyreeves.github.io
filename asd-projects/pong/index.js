@@ -18,7 +18,8 @@ function runProgram(){
     LEFT: 37,
     UP: 38,
     RIGHT: 39,
-    DOWN: 40
+    DOWN: 40,
+    ENTER: 13
   }
   const BOARD_WIDTH = $("#board").width();
   const BOARD_HEIGHT = $("#board").height()
@@ -26,6 +27,8 @@ function runProgram(){
   var leftPaddle = ObjectFactory("#leftPaddle");
   var rightPaddle = ObjectFactory("#rightPaddle");
   var ball = ObjectFactory("#ball");
+  var player1Score = 0;
+  var player2Score = 0;
   // one-time setup
   let interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
   //$(document).on('eventType', handleEvent);                           // change 'eventType' to the type of event you want to handle
@@ -71,6 +74,9 @@ function runProgram(){
       rightPaddle.speedY = 5;
       console.log("DOWN pressed");
     }
+    if (event.which === KEY.ENTER) {
+      changeColor();
+    }
     //console.log(event.which)
   }
   /*
@@ -104,9 +110,6 @@ function runProgram(){
     var gameItem = {};
     gameItem.id = id;
     gameItem.x = parseFloat($(id).css("left"));
-    // if(parseFloat($(id).css("right"))){
-    //   gameItem.x = BOARD_WIDTH - parseFloat($(id).css("right"));
-    // }
     gameItem.y = parseFloat($(id).css("top"));
     gameItem.speedX = 0;
     gameItem.speedY = 0;
@@ -144,10 +147,22 @@ function runProgram(){
     let width = BOARD_WIDTH; 
     let height = BOARD_HEIGHT; 
 
-    if (coordX < 0 || doCollide(ball,leftPaddle)) {
-      //collide with left wall
+    if(doCollide(ball,leftPaddle)) {
+      //collide with left paddle
       item.x -= speedX;
       item.speedX = -speedX;
+    }
+    if(coordX < 0){
+      //ball collides with left wall, reset ball, increment score
+      if(item.id === "#ball"){
+        player2Score++;
+        $("#score2").text("Player 2 Score: " + player2Score);
+        if(player2Score === 7){
+          endGame();
+          alert("Player 2 Wins! Press Enter to randomize colors when you refresh!");
+        }
+        startBall();
+      }
     }
     if (coordY < 0) {
       //collide with top wall
@@ -163,6 +178,18 @@ function runProgram(){
       //collide with bottom wall
       item.y -= speedY;
       item.speedY = -speedY;
+    }
+    if(coordX + item.width > width){
+      //ball collides with right paddle, reset ball, increment score
+      if(item.id === "#ball"){
+        player1Score++;
+        $("#score1").text("Player 1 Score: " + player1Score);
+        if(player1Score === 7){
+          endGame();
+          alert("Player 1 Wins! Press Enter to randomize colors when you refresh!");
+        }
+        startBall();
+      }
     }
   }
   //handle paddle-ball collisions
@@ -199,10 +226,24 @@ function runProgram(){
   }
   // make ball's starting position and random speed
   function startBall(){
-    ball.x = 200;
-    ball.y = 340;
+    ball.x = (BOARD_WIDTH / 2);
+    ball.y = (BOARD_HEIGHT / 2);
     ball.speedX = randomNum = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
     ball.speedY = randomNum = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
+  }
+  //calls in response to enter presses
+  function changeColor() {
+    var randomColor = "#000000".replace(/0/g, function () {
+      return (~~(Math.random() * 16)).toString(16);
+    });
+    
+    $("#leftPaddle").css('background-color', randomColor);
+    $("#rightPaddle").css('background-color', randomColor);
+    $("#ball").css('background-color', randomColor);
+    $("#middle").css('background-color', randomColor);
+    $("#score1").css('background-color', randomColor);
+    $("#score2").css('background-color', randomColor);
+    $("#board").css('border-color', randomColor);
   }
   function endGame() {
     // stop the interval timer
